@@ -7,55 +7,199 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# LaraPress - Aplikasi Blog Sederhana
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+LaraPress adalah aplikasi blog sederhana yang dibangun menggunakan Laravel 12 untuk tujuan pembelajaran dan pengembangan keterampilan web development.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 Tentang Proyek
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Proyek ini dibuat sebagai bagian dari pembelajaran Laravel framework. LaraPress mendemonstrasikan konsep-konsep dasar Laravel seperti routing, views, dan struktur MVC.
 
-## Learning Laravel
+## 🚀 Fitur yang Sudah Diimplementasikan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. **Halaman Utama (Welcome Page)**
+   - Mengubah tampilan default Laravel menjadi halaman sederhana
+   - Menampilkan judul "Selamat Datang di LaraPress"
+   - Struktur HTML yang bersih dan minimal
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. **Halaman Tentang Kami**
+   - Route: `/about`
+   - Menampilkan informasi tentang LaraPress
+   - Menjelaskan tujuan proyek sebagai pembelajaran Laravel 12
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. **Halaman Kontak**
+   - Route: `/kontak`
+   - Menampilkan informasi kontak pengembang
 
-## Laravel Sponsors
+## 📁 Struktur File yang Dimodifikasi
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### File yang Dibuat/Dimodifikasi:
 
-### Premium Partners
+1. **`resources/views/welcome.blade.php`**
+   - Mengubah tampilan default Laravel yang kompleks menjadi struktur HTML sederhana
+   - Menampilkan pesan sambutan untuk pengunjung blog
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+2. **`resources/views/about.blade.php`** (BARU)
+   - File view baru untuk halaman "Tentang Kami"
+   - Berisi informasi tentang LaraPress sebagai proyek pembelajaran
 
-## Contributing
+3. **`resources/views/kontak.blade.php`** (BARU)
+   - File view baru untuk halaman "kontak"
+   - Berisi informasi tentang kontak pengembang
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **`routes/web.php`**
+   - Menambahkan route baru `/about` yang mengarah ke view `about.blade.php`
+   - Menambahkan route baru `/kontak` yang mengarah ke view `kontak.blade.php`
 
-## Code of Conduct
+## 🛠️ Langkah-langkah Implementasi
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Step 1: Modifikasi Halaman Welcome
+Mengubah file `resources/views/welcome.blade.php` dari tampilan default Laravel (266 baris) menjadi HTML sederhana:
 
-## Security Vulnerabilities
+```html
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Selamat Datang di LaraPress</title>
+</head>
+<body>
+ <h1>Selamat Datang di Blog LaraPress</h1>
+ <p>Ini adalah halaman utama dari aplikasi blog kita.</p>
+ <a href="/tentang-kami">Lihat Halaman Tentang Kami</a>
+ <a href="/kontak">Kembali ke Halaman Utama</a>
+</body>
+</html>
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Step 2: Membuat Route Baru
+Menambahkan route baru di `routes/web.php`:
 
-## License
+```php
+Route::get('/about', function () {
+    return view('about');
+});
+Route::get('/kontak', function () {
+    return view('kontak');
+});
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Step 3: Membuat View About
+Membuat file baru `resources/views/about.blade.php`:
+
+```html
+<html>
+<head>
+ <title>Tentang Kami - LaraPress</title>
+</head>
+<body>
+ <h1>Tentang LaraPress</h1>
+ <p>LaraPress adalah sebuah proyek blog sederhana yang dibuat untuk
+mempelajari dasar-dasar framework Laravel 12.</p>
+
+<a href="/">Kembali ke Halaman Utama</a>
+<a href="/kontak">Kembali ke Halaman Utama</a>
+
+</body>
+</html>
+```
+
+### Step 4: Membuat View Contact
+Membuat file baru `resources/views/contact.blade.php`:
+
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang di LaraPress</title>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">LaraPress</div>
+    </nav>
+
+    <div class="container">
+        <h1>Kontak Tim Kami</h1>
+        <div class="col">
+            <div id="form">
+                <form action="#" method="post">
+                    <label for="nama1">Nama</label>
+                    <input type="text" id="nama1" name="nama" placeholder="Masukkan nama kamu" required>
+
+                    <label for="email1">Email</label>
+                    <input type="email" id="email1" name="email" placeholder="Masukkan email kamu" required>
+
+                    <label for="pesan1">Pesan</label>
+                    <textarea id="pesan1" name="pesan" placeholder="Tulis pesan kamu..." required></textarea>
+
+                    <button type="submit">Kirim Pesan</button>
+                </form>
+            </div>
+
+            <div class="info">
+                <h3>Hubungi Kami</h3>
+                <p>Email: support@larapress.com</p>
+                <p>Telepon: (021) 123-4567</p>
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.965197674812!2d110.3671!3d-7.801389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a578c0e1234ab%3A0xabcdef1234567890!2sDummy%20Location!5e0!3m2!1sid!2sid!4v1234567890123"
+                    width="500" height="240" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+                <a href="/">Kembali ke Halaman Utama</a>
+                <a href="/tentang-kami">Lihat Halaman Tentang Kami</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+```
+
+## 🌐 Endpoint yang Tersedia
+
+| Route | Method | Deskripsi |
+|-------|--------|-----------|
+| `/` | GET | Halaman utama LaraPress |
+| `/about` | GET | Halaman tentang LaraPress |
+| `/kontak` | GET | Halaman tentang kontak pengembang |
+
+## 💻 Teknologi yang Digunakan
+
+- **Framework**: Laravel 12
+- **PHP Version**: 8.x
+- **Database**: MySQL
+- **Frontend**: Blade Template Engine, HTML, CSS
+- **Build Tool**: None
+
+## 📦 Instalasi
+
+1. Clone repository ini:
+```bash
+git clone https://github.com/xnoname2003/prak-pbw-a/tree/main/Prak3/LaraPress
+```
+
+2. Install dependencies:
+```bash
+composer install
+npm install
+```
+
+3. Buat file `.env`:
+```bash
+cp .env.example .env
+```
+
+4. Generate application key:
+```bash
+php artisan key:generate
+```
+
+5. Jalankan development server:
+```bash
+php artisan serve
+```
+
+6. Akses aplikasi di browser:
+```
+http://localhost:8000
+```
