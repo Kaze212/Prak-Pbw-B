@@ -7,55 +7,207 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Laporan Laravel Filament
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Zidan Wali Arubusman
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 4523210001
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
 
-## Learning Laravel
+### 1. Buat Proyek Laravel Baru
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Buat Proyek Kosong
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    ```
+    laravel new smpmentari_filament
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. Masuk ke Direktori Laravel smpmentari_filament
 
-## Laravel Sponsors
+    ```
+    cd smpmentari_filament
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. Coba Jalankan Server Untuk Uji Coba
 
-### Premium Partners
+    ```
+    php artisan serve
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. Konfigurasi Database
 
-## Contributing
+1. Buka Aplikasi Service Kesayangan Kalian & Siapkan DB
+    - Bisa pake MAMP, XAMPP
+2. Konfigurasi .env
+    - Buka file .env di root proyek, sesuaikan dengan berikut :
+      ```
+      DB_CONNECTION=mysql
+      DB_HOST=127.0.0.1
+      DB_PORT=8889
+      DB_DATABASE=smpmentari_filament
+      DB_USERNAME=root
+      DB_PASSWORD=root
+      ```
+3. Migrasi Awal
+    - Jika belum ada database smpmentari_filament, ketik yes untuk membuat database
+        ```
+        php aritisan migrate
+        ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Install Filament
 
-## Code of Conduct
+1. Pasang Paket Filament
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```
+    composer require "filament/filament"
+    ```
 
-## Security Vulnerabilities
+2. Generate Panel Admin
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```
+    php artisan filament:install --panels
+    ```
+    `- Panel ID = admin`
 
-## License
+3. Buat Akun Filament
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```
+    php artisan make:filament-user
+    ```
+    ```
+    - nama : root
+    - email : root@email.com
+    - password : root
+    ```
+
+4. Link Storage Untuk Upload
+    - Jalankan server php artisan serve buka di browser 127.0.0.1:8000/admin
+    ```
+    php artisan storage:link
+    ```
+
+### 4. Desain Data Minimal (Tema SMP Mentari)
+
+-   Kita pakai dua entitas untuk CRUD latihan:
+    1.  kegiatan : judul, tanggal, ringkasan, isi, foto
+    2.  siswa : nisn, nama, jenis_kelamin, kelas, tanggal_lahir, alamat
+
+- Buat Model + Migrasi
+
+    ```
+    php artisan make:model Kegiatan -m
+    ```
+    ```
+    php artisan make:model Siswa -m
+    ```
+
+- Edit Migrasi :
+
+    1. di file proyek `database/migrations/xxxx_xx_xx_xxxxxx_create_kegiatans_table.php`
+
+        ```
+        public function up(): void
+        {
+            Schema::create('kegiatans', function (Blueprint $table) {
+                $table->id();
+                $table->string('judul');
+                $table->date('tanggal');
+                $table->string('ringkasan')->nullable();
+                $table->text('isi')->nullable();
+                $table->string('foto')->nullable(); // path gambar
+                $table->timestamps();
+            });
+        }
+        ```
+
+    2. di file proyek `database/migrations/xxxx_xx_xx_xxxxxx_create_siswas_table.php`
+
+        ```
+        public function up(): void
+        {
+            Schema::create('siswas', function (Blueprint $table) {
+                $table->id();
+                $table->string('nisn')->unique();
+                $table->string('nama');
+                $table->enum('jenis_kelamin', ['L', 'P']);
+                $table->string('kelas'); // contoh: 7A, 8B, 9C
+                $table->date('tanggal_lahir')->nullable();
+                $table->text('alamat')->nullable();
+                $table->timestamps();
+
+            });
+        }
+        ```
+
+- Jalakan migrasi
+
+    ```
+    php artisan migrate
+    ```
+
+### 5. Generate Filament Resource (CRUD Otomatis)
+
+1. Filament akan membuat halaman List / Create / Edit lengkap.
+
+    ```
+    php artisan make:filament-resource Kegiatan --generate
+    ```
+    ```
+    php artisan make:filament-resource Siswa --generate
+    ```
+
+    Perintah di atas membuat:
+
+    -   `app/Filament/Resources/KegiatanResource.php`
+    -   `app/Filament/Resources/KegiatanResource/Pages/{Create,Edit,List}Kegiatans.php`
+    -   `app/Filament/Resources/SiswaResource.php`
+    -   `app/Filament/Resources/SiswaResource/Pages/{Create,Edit,List}Siswas.php`
+
+2.  Form & Tabel KegiatanResource
+
+    Edit `app/Filament/Resources/KegiatanResource.php` bagian `form()` dan `table()` contoh minimal:
+    1. `KegiatanResource.php`
+    2. `KegiatanForm.php`
+    3. `KegiatanTable.php`
+
+3. Form & Tabel SiswaResource
+
+    1. `SiswaResource.php`
+    2. `SiswaTable.php`
+    3. `SiswaForm.php`
+    4. `App\Models\Kegiatan.php`
+    5. `App\Models\Siswa.php`
+
+### 6. Branding Panel : Identitas SMP Mentari
+
+-   Buka `app/Providers/Filament/AdminPanelProvider.php` dan sesuaikan:
+    ```
+    ->brandName('SMP Mentari')
+    ->navigationGroups([
+        'Akademik', 'Publikasi'
+    ])
+    ->sidebarCollapsibleOnDesktop(true);
+    ```
+
+### 7. Halaman Depan (Public) yang Simple
+
+-   Walau fokus praktikum adalah Filament (admin), tambahkan landing page publik agar konteks sekolah terasa.
+
+    1. Route
+
+        ```
+        Route::get('/', function () {
+            return view('welcome');
+        });
+
+        Route::get('/kegiatan', function () {
+            return view('kegiatan-public', [
+                'items' => \App\Models\Kegiatan::latest()->paginate(9),
+            ]);
+        });
+        ```
+
+-   View `resources/views/kegiatan-public.blade.php`
+-   View `resources/views/layouts/app.blade.php`
+-   Pastikan sudah menjalankan `php artisan storage:link` agar gambar dari `FileUpload` tampil di halaman publik.
